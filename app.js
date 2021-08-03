@@ -49,7 +49,7 @@ app.post('/signin', celebrate({
   }),
 }), login);
 
-router.post('/signout', logout);
+app.post('/signout', logout);
 
 app.use(auth);
 
