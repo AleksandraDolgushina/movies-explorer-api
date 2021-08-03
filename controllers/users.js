@@ -35,6 +35,27 @@ module.exports.createUser = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.patchUser = (req, res, next) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about }, {
+    new: true,
+    runValidators: true,
+  })
+    .then((user) => {
+      if (user === null) {
+        throw new NotFoundError('Такого пользователя нет');
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        throw new ValidationError('Переданы некорректные данные');
+      }
+    })
+    .catch(next);
+};
+
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)

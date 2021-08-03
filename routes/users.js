@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { getUsers, createUser, } = require('../controllers/users');
+const { getUsers, patchUser } = require('../controllers/users');
 
 router.get('/users/me', getUsers);
 router.patch('/users/me', celebrate({
@@ -8,6 +8,6 @@ router.patch('/users/me', celebrate({
     email: Joi.string().required().email(),
     name: Joi.string().required().min(2).max(30),
   }),
-}), createUser);
+}), patchUser);
 
 module.exports = router;
