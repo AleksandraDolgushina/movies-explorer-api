@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/users');
 const ValidationError = require('../errors/validation-err');
 const DuplicateError = require('../errors/duplicate-err');
 const AuthentificationError = require('../errors/authentification-err');
