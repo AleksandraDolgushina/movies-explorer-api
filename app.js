@@ -1,15 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const routerUser = require('./routes/users');
 const routerMovie = require('./routes/movies');
-const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
+const router = require('./routes');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -34,22 +33,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-  }).unknown(true),
-}), createUser);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
-
-app.post('/signout', logout);
+app.use(router)
 
 app.use(auth);
 
@@ -59,7 +43,6 @@ app.use(routerMovie);
 app.use(errorLogger);
 app.use(errors());
 
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const status = err.statusCode || 500;
   const { message } = err;

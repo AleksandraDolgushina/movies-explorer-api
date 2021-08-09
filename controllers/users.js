@@ -1,17 +1,25 @@
 const User = require('../models/users');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const ValidationError = require('../errors/validation-err');
 const DuplicateError = require('../errors/duplicate-err');
 const AuthentificationError = require('../errors/authentification-err');
+const { JWT_SECRET = 'dev-secret' } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
-  User.find({})
-    .then((user) => res.send({ data: user }))
+  User.findById(req.user._id)
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new ValidationError('Переданы некорректные данные');
+      }
+      throw err;
+    })
     .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {
   const {
-    // eslint-disable-next-line no-unused-vars
     name, email, password,
   } = req.body;
 
@@ -31,13 +39,14 @@ module.exports.createUser = (req, res, next) => {
       if (err.name === 'MongoError' && err.code === 11000) {
         throw new DuplicateError('Пользователь с указанным email уже существует');
       }
+      throw err;
     })
     .catch(next);
 };
 
 module.exports.patchUser = (req, res, next) => {
-  const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, email }, {
     new: true,
     runValidators: true,
   })
@@ -52,6 +61,7 @@ module.exports.patchUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         throw new ValidationError('Переданы некорректные данные');
       }
+      throw err;
     })
     .catch(next);
 };
@@ -60,7 +70,7 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
       res.cookie('jwt', token, {
         httpOnly: true,
         sameSite: true,

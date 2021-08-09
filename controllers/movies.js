@@ -5,7 +5,7 @@ const CopyrightError = require('../errors/copyright-err');
 
 module.exports.getMovie = (req, res, next) => {
   Movie.find({})
-    .then((movie) => res.send({ movies }))
+    .then((movies) => res.send({ movies }))
     .catch(next);
 };
 
@@ -43,6 +43,7 @@ module.exports.createMovie = (req, res, next) => {
       if (err.name === 'ValidationError') {
         throw new ValidationError('Переданы некорректные данные');
       }
+      throw err;
     })
     .catch(next);
 };
@@ -53,8 +54,8 @@ module.exports.deleteMovie = (req, res, next) => {
       if (movie === null) {
         throw new NotFoundError('Такого фильма нет');
       }
-      if (card.owner.equals(req.user._id)) {
-        Card.findByIdAndRemove(req.params.movieId)
+      if (movie.owner.equals(req.user._id)) {
+        return movie.remove()
           .then((movie) => res.send({ movie }));
       } else {
         throw new CopyrightError('Невозможно удалить фильм');

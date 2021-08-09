@@ -14,9 +14,9 @@ const methodValidation = (value) => {
 
 router.get('/movies', getMovie);
 
-router.delete('/movies/movieId', celebrate({
+router.delete('/movies/:movieId', celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().length(24).hex(),
+    movieId: Joi.string().length(24).hex(),
   }),
 }), deleteMovie);
 
