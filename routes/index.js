@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
-const NotFoundError = require('../errors/not-found-err');
 const router = require('express').Router();
+const NotFoundError = require('../errors/not-found-err');
 const { createUser, logout, login } = require('../controllers/users');
 const routerUser = require('./users');
 const routerMovie = require('./movies');
