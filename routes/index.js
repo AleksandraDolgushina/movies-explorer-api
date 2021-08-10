@@ -2,6 +2,9 @@ const { celebrate, Joi } = require('celebrate');
 const { createUser, login, logout } = require('../controllers/users');
 const NotFoundError = require('../errors/not-found-err');
 const router = require('express').Router();
+const routerUser = require('./users');
+const routerMovie = require('./movies');
+const auth = require('../middlewares/auth');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -19,6 +22,11 @@ router.post('/signin', celebrate({
 }), login);
 
 router.post('/signout', logout);
+
+router.use(auth);
+
+router.use(routerUser);
+router.use(routerMovie);
 
 router.use('/', (req, res, next) => {
   next(new NotFoundError('Ресурс не найден'));

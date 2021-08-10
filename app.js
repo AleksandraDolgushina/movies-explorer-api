@@ -3,9 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
-const routerUser = require('./routes/users');
-const routerMovie = require('./routes/movies');
-const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 const router = require('./routes');
@@ -34,11 +31,6 @@ app.get('/crash-test', () => {
 });
 
 app.use(router)
-
-app.use(auth);
-
-app.use(routerUser);
-app.use(routerMovie);
 
 app.use(errorLogger);
 app.use(errors());

@@ -1,4 +1,5 @@
 const User = require('../models/users');
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const ValidationError = require('../errors/validation-err');
