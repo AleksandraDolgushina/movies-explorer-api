@@ -76,7 +76,11 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
         maxAge: 3600000 * 24 * 7,
-      }).send({ token });
+      }).send({
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+      });
     })
     .catch(() => {
       next(new AuthentificationError('Неправильный адрес почты или пароль'));
