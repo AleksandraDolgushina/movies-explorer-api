@@ -5,7 +5,7 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const router = require('./routes');
+const router = require('./routes/index');
 
 const { PORT = 3000 } = process.env;
 const app = express();
