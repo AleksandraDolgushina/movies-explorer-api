@@ -1,5 +1,5 @@
-const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
 const NotFoundError = require('../errors/not-found-err');
 const routerUser = require('./users');
 const routerMovie = require('./movies');
