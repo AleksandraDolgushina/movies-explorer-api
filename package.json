@@ -1,0 +1,42 @@
+{
+  "name": "diploma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleksandraDolgushina/movies-explorer-api.git"
+  },
+  "author": "Aleksandra Dolgushina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AleksandraDolgushina/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/AleksandraDolgushina/movies-explorer-api#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.24.0",
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "celebrate": "^15.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "errors": "^0.3.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "express": "^4.17.1",
+    "express-winston": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.6",
+    "validator": "^13.6.0",
+    "winston": "^3.3.3"
+  }
+}
