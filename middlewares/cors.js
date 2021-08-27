@@ -1,7 +1,8 @@
 const allowedCors = [
   'https://dolgushina.diploma.nomoredomains.club',
   'http://dolgushina.diploma.nomoredomains.club',
-  //'https://api.dolgushina.diploma.nomoredomains.club',
+  'https://api.dolgushina.diploma.nomoredomains.monster',
+  'http://api.dolgushina.diploma.nomoredomains.monster',
 ];
 
 module.exports = ((req, res, next) => {
