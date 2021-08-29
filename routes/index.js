@@ -28,7 +28,7 @@ router.use(auth);
 router.use(routerUser);
 router.use(routerMovie);
 
-router.use('/', (req, res, next) => {
+router.use('*', (req, res, next) => {
   next(new NotFoundError('Ресурс не найден'));
 });
 
