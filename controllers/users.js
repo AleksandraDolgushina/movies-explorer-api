@@ -80,6 +80,7 @@ module.exports.login = (req, res, next) => {
         _id: user._id,
         email: user.email,
         name: user.name,
+        token: user.token
       });
     })
     .catch(() => {
