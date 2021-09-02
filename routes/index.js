@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/not-found-err');
 const routerUser = require('./users');
 const routerMovie = require('./movies');
 const auth = require('../middlewares/auth');
-const { createUser, logout, login } = require('../controllers/users');
+const { createUser, login } = require('../controllers/users');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -20,8 +20,6 @@ router.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), login);
-
-router.post('/signout', logout);
 
 router.use(auth);
 

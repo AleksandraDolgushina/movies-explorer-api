@@ -78,18 +78,3 @@ module.exports.login = (req, res, next) => {
       next(new AuthentificationError('Неправильный адрес почты или пароль'));
     });
 };
-
-// module.exports.logout = (req, res, next) => {
-//   const { email } = req.body;
-//   return User.findOne({ email })
-//     .then((user) => {
-//       res
-//         .clearCookie('jwt', {
-//           httpOnly: true,
-//           sameSite: true,
-//         })
-//         .status(200)
-//         .send(user);
-//     })
-//     .catch(next);
-// };
