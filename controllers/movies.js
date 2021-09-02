@@ -4,7 +4,7 @@ const ValidationError = require('../errors/validation-err');
 const CopyrightError = require('../errors/copyright-err');
 
 module.exports.getMovie = (req, res, next) => {
-  Movie.find({})
+  Movie.find({owner: req.user._id })
     .then((movies) => res.send({ movies }))
     .catch(next);
 };
