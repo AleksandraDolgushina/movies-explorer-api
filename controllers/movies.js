@@ -57,6 +57,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (String(movie.owner) !== req.user._id) {
         throw new CopyrightError('Невозможно удалить фильм');
       }
+      res.send({ movie });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
