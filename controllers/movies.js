@@ -49,15 +49,12 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findByIdAndRemove(req.params.movieId)
     .then((movie) => {
       if (movie === null) {
         throw new NotFoundError('Такого фильма нет');
       }
-      if (movie.owner.equals(req.user._id)) {
-        return movie.remove()
-          .then((movie) => res.send({ movie }));
-      } else {
+      if (String(movie.owner) !== req.user._id) {
         throw new CopyrightError('Невозможно удалить фильм');
       }
     })
